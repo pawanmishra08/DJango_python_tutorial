@@ -1,13 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Django Tutorial</title>
-</head>
-<body>
-    <h1> This template is return by Django server</h1>
-    <h2 style="color: blue;"> Welcome to Django Framework </h2>
-    <p> this is coming from Django server </p>
-</body>
-</html>
+ {% extends "base.html" %}
+ {% block start%}
+    <h1>This is index page !!</h1>
+
+    <a href="/contact/">
+        contact
+    </a>
+    |
+    <a href="/about/">
+        About
+    </a>
+
+
+    <!-- {{peoples}} -->
+
+    <table class="container">
+      <tr>
+        <th>S.N.</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Can Vote</th>
+      </tr>
+
+      {%for people in peoples%}
+      <tr>
+        <td>{{forloop.counter}}</td>
+        <td>{{people.name}}</td>
+        <td>{{people.age}}</td>
+        <td {% if people.age < 25 %} style="background:red" {% endif %}>
+          {% if people.age >= 25 %}
+         👍
+          {% else %}
+          👎
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+
+    <p>
+
+        <!-- {% if "cucumber" in vegetables %}
+        yes Available !!
+        {% elif "potato" in vegetables %}
+        yes potato is Available !!
+        {% else %}
+        Not Available !!
+        {% endif %} -->
+    </p>
+
+    {% endblock %}
