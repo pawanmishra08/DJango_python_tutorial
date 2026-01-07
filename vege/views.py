@@ -1,4 +1,5 @@
 from django.shortcuts import render , redirect
+from django.http import HttpResponse
 
 from .models import Receipe
 
@@ -18,8 +19,16 @@ def receipes(request):
             receipe_description= receipe_description,
             receipe_image= receipe_image,
         )
-        return redirect('/receipes/')
+        return redirect('/receipes/') #Redirect to the same page after POST request
+
+    queryset = Receipe.objects.all()
+    context = {'receipes': queryset}
 
         # print(receipe_name, receipe_description, receipe_image)
         # print(data)
-    return render(request, "receipes.html")
+    return render(request, "receipes.html", context)
+
+def delete_receipe(request, id):
+   queryset = Receipe.objects.get(id = id)
+   queryset.delete()
+   return redirect('/receipes/')
