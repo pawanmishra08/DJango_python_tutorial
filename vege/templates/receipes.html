@@ -39,8 +39,28 @@
     <button type="submit" class="btn btn-success">Add Receipe</button>
   </form>
 
+  <hr />
+  <div class="mt-3">
+    <div class="mx-auto-col-6">
+      <form>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label"
+            >Search Food</label
+          >
+          <input
+            name="search"
+            type="text"
+            placeholder="search receipe"
+            class="form-control"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+      </form>
+    </div>
+  </div>
+
   <!-- {{receipes}} -->
-  <table class="table">
+  <table class="table mt-5">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -57,11 +77,16 @@
         <td>{{receipe.receipe_name}}</td>
         <td>{{receipe.receipe_description}}</td>
         <td>
-          <img src = "/media/{{receipe.receipe_image}}" style="height: 100px;">
-          </td>
-          <td>
-            <a href ="/delete_receipe/{{receipe.id}}" class = "btn btn-danger"> Delete </a>
-          </td>
+          <img src="/media/{{receipe.receipe_image}}" style="height: 100px" />
+        </td>
+        <td>
+          <a href="/delete_receipe/{{receipe.id}}" class="btn btn-danger m-2">
+            Delete
+          </a>
+          <a href="/update_receipe/{{receipe.id}}" class="btn btn-warning">
+            Update
+          </a>
+        </td>
       </tr>
       {% endfor %}
     </tbody>
