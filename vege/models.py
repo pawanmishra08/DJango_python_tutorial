@@ -9,3 +9,34 @@ class Receipe(models.Model):
     receipe_description = models.TextField()
     receipe_image = models.ImageField(upload_to="receipe")
     receipe_view_count = models.IntegerField(default=1)
+
+class Department(models.Model):
+    department = models.CharField(max_length=100)
+
+    def __str__(self) -> str:
+        return self.department #Return department name in admin panel
+
+    class Meta:
+        ordering = ['department'] #Order departments alphabetically
+
+class StudentID(models.Model):
+    student_id = models.CharField(max_length=100)
+
+    def __str__(self) -> str:
+        return self.student_id #Return student ID in admin panel
+
+
+class Student(models.Model):
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    student_id = models.OneToOneField(StudentID,related_name="student", on_delete=models.CASCADE)
+    student_name = models.CharField(max_length=100)
+    student_email = models.EmailField(unique=True)
+    student_age = models.IntegerField(default=18)
+    student_address = models.TextField()
+
+    def __str__(self) -> str:
+        return self.student_name #Return student name in admin panel
+
+    class Meta:
+        ordering =  ['student_name'] #Order students alphabetically
+        verbose_name = 'student'
