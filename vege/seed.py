@@ -14,7 +14,7 @@ def seed_db(n=10)->None:
       student_id = f'STU{random.randint(100, 999)}'
       student_name =fake.name()
       student_email = fake.email()
-      student_age = random.randint(10,30)
+      student_age = random.randint(10,30) 
       student_address = fake.address()
 
       student_id_obj = StudentID.objects.create(student_id = student_id)
