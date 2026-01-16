@@ -2,11 +2,16 @@ from django.shortcuts import render , redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib import messages
-from .models import Receipe
-
+from .models import *
+from django.contrib.auth import authenticate , login , logout
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
+@login_required(login_url='/login/')
 def receipes(request):
+
+    if not request.user.is_authenticated:
+        return HttpResponse("user is not authenticated")
     if request.method == "POST":
         data = request.POST
 
@@ -31,6 +36,7 @@ def receipes(request):
     context = {'receipes': queryset}
     return render(request, "receipes.html", context)
 
+@login_required(login_url='/login/')
 def update_receipe(request, id):
     queryset = Receipe.objects.get(id = id)
 
@@ -55,13 +61,41 @@ def update_receipe(request, id):
     context = {'receipe': queryset }
     return render(request, "update_receipe.html",context)
 
+@login_required(login_url='/login/')
 def delete_receipe(request, id):
    queryset = Receipe.objects.get(id = id)
    queryset.delete()
    return redirect('/receipes/')
 
 def login_page(request):
+
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        # Debugging: See what is actually coming from the browser
+        # print(f"DEBUG: Username entered: '{username}'")
+        # print(f"DEBUG: Password entered: '{password}'")
+
+        if not User.objects.filter(username = username).exists():
+            messages.error(request, "Username already exists !!!")
+            return redirect('/login/')
+
+        user = authenticate(username=username , password=password)
+
+        if user is None:
+            messages.error(request, "Invalid password !!!")
+            return redirect('/login/')
+
+        else:
+            login(request, user)
+            return redirect('/receipes/')
+
     return render(request, "login.html")
+
+def logout_page(request):
+    logout(request)
+    return redirect('/login/')
 
 def register_page(request):
 
@@ -87,5 +121,5 @@ def register_page(request):
         messages.info(request, "Account created successfully !!!")
 
 
-        return redirect('/register/')
+        return redirect('/login/')
     return render(request, "register.html")
