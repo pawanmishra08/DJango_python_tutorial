@@ -38,6 +38,7 @@ urlpatterns = [
     path('logout/', logout_page, name = 'logout_page'),
     path('register/', register_page, name = 'register_page'),
     path('students/', get_students, name='get_students'),
+    path('check-the-marks/<student_id>/', see_marks, name = 'see_mark'),
 
     path('admin/', admin.site.urls),
 ]
