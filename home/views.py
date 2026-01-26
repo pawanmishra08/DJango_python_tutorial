@@ -1,8 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from vege.seed import  *
+
 # Create your views here.
 
 def home(request):
+    # seed_db(10)
 
     peoples = [
         {'name': 'Abhay Mandal', 'age': 24},

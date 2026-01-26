@@ -31,7 +31,7 @@ def receipes(request):
         )
         return redirect('/receipes/') #Redirect to the same page after POST request
 
-    queryset = Receipe.objects.all()
+    queryset = Receipe.objects.filter(is_deleted = False)
 
     if request.GET.get('search'):
         queryset = queryset.filter(receipe_name__icontains=request.GET.get('search'))
@@ -41,8 +41,8 @@ def receipes(request):
     return render(request, "receipes.html", context)
 
 @login_required(login_url='/login/')
-def update_receipe(request, id):
-    queryset = Receipe.objects.get(id = id)
+def update_receipe(request, slug):
+    queryset = Receipe.objects.get(slug = slug)
 
     if request.method =="POST":
         data = request.POST

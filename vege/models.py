@@ -1,16 +1,30 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-
+from .utils import generate_slug
 User = get_user_model()
+
+class StudentManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_deleted = False)
 
 # Create your models here.
 
 class Receipe(models.Model):
     user = models.ForeignKey(User, on_delete = models.SET_NULL, null = True, blank= True)
     receipe_name = models.CharField(max_length= 100)
+    # slug = models.SlugField(unique= True)
     receipe_description = models.TextField()
     receipe_image = models.ImageField(upload_to="receipe")
     receipe_view_count = models.IntegerField(default=1)
+    is_deleted = models.BooleanField(default= False)
+
+    # objects = ReceipesManager()
+    # admin_objects = models.Manager()
+
+
+    def save(self, *args, **kwargs):
+        self.slug = generate_slug(self.receipe_name)
+        super(Receipe, self).save(*args, **kwargs)
 
 class Department(models.Model):
     department = models.CharField(max_length=100)
@@ -41,6 +55,12 @@ class Student(models.Model):
     student_email = models.EmailField(unique=True)
     student_age = models.IntegerField(default=18)
     student_address = models.TextField()
+    is_deleted = models.BooleanField(default= False)
+
+
+    objects = StudentManager()
+    admin_objects = models.Manager()
+
 
     def __str__(self) -> str:
         return self.student_name #Return student name in admin panel
