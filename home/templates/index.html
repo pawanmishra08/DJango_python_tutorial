@@ -1,19 +1,23 @@
  {% extends "base.html" %}
  {% block start%}
-    <h1>This is index page !!</h1>
 
-    <a href="/contact/">
+ <div  class="container">
+  <h1>This is Sent Email !!</h1>
+
+   <a href="{% url 'send_email' %}" class="btn btn-success"> Send Email</a>
+    <!-- <a href="/contact/">
         contact
     </a>
     |
     <a href="/about/">
         About
-    </a>
+    </a> -->
+ </div>
 
 
     <!-- {{peoples}} -->
 
-    <table class="container">
+    <table class="container mt-5">
       <tr>
         <th>S.N.</th>
         <th>Name</th>
