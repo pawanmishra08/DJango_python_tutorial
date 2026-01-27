@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/6.0/ref/settings/#databases
+# https://docs.djangoproject.comecipient_list = ["brahamdevthakur71@gmail.com"]/en/6.0/ref/settings/#databases
 
 DATABASES = {
     'default': {

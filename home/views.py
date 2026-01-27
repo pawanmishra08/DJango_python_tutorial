@@ -1,13 +1,20 @@
 from django.shortcuts import render , redirect
 from django.http import HttpResponse
 from vege.seed import  *
-from .utils import send_email_to_client
+from .utils import send_email_to_client, send_email_with_attachment
+from django.conf import settings
 
 # Create your views here.
 
 
 def send_email(request):
-    send_email_to_client()
+
+    Subject= "this is the test email with attachment"
+    message= " you naughty you are receiving email with attachment"
+    recipient_list = "" # whom you want to send the email
+    file_path = f"{settings.BASE_DIR}/home/templates/index.html"
+    # send_email_to_client()
+    send_email_with_attachment(Subject, message, recipient_list, file_path)
     return redirect('/')
 
 
