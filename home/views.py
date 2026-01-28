@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from vege.seed import  *
 from .utils import send_email_to_client, send_email_with_attachment
 from django.conf import settings
+from .models import *
 
 # Create your views here.
 
@@ -21,6 +22,8 @@ def send_email(request):
 def home(request):
     # seed_db(10)
 
+    Car.objects.create(car_name= f"NEXON-{random.randint(0, 100)}") # this will trigger the post_save signal
+
     peoples = [
         {'name': 'Abhay Mandal', 'age': 24},
         {'name': 'Yubraj Yadav', 'age': 27},
@@ -31,9 +34,9 @@ def home(request):
 
     for people in peoples:
         if people['age'] :
-            print("yes")
+            # print("yes")
 
-    vegetables = ['Tomato', 'potato', 'pumpkin']
+          vegetables = ['Tomato', 'potato', 'pumpkin']
 
     # for people in peoples:
     #     print(people)
